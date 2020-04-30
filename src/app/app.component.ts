@@ -93,6 +93,9 @@ export class AppComponent {
           this.loadingStatus = false;
           if (data.status) {
             this.signUpForm.reset();
+            this.showDashboard = this.showSignup = false;
+            this.showLogin = true;
+
             alert(data.message);
           } else {
             alert(data.reason);
