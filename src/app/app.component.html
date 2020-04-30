@@ -1,6 +1,7 @@
 <div class="limiter">
     <div class="container-login100" style="background-image: url('assets/images/bg-01.jpg');">
         <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+
             <form class="login100-form validate-form" [formGroup]="loginForm" (submit)="loginSubmit($event)" *ngIf="showLogin">
                 <span class="login100-form-title p-b-49">Login</span>
 
@@ -25,8 +26,8 @@
                 <div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <button type="submit" class="login100-form-btn">
-                            Login
+                        <button type="submit" class="login100-form-btn" [disabled]="loadingStatus">
+                            {{ (!loadingStatus)?'Login':'Loading..' }}
                         </button>
                     </div>
                 </div>
@@ -50,13 +51,13 @@
                 <div class="wrap-input100 validate-input m-b-23" data-validate="email is reauired">
                     <span class="label-input100">Email</span>
                     <input type="text" class="input100" placeholder="Type your email" formControlName="email" required>
-                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                    <span class="focus-input100" data-symbol="&#xf159;"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input m-b-23" data-validate="mobile is reauired">
                     <span class="label-input100">Mobile</span>
                     <input type="text" class="input100" placeholder="Type your mobile" formControlName="mobile" required>
-                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                    <span class="focus-input100" data-symbol="&#xf2b7;"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
@@ -80,8 +81,8 @@
                 <div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
-                        <button type="submit" class="login100-form-btn">
-                            Sign up
+                        <button type="submit" class="login100-form-btn" [disabled]="loadingStatus">
+                            {{ (!loadingStatus)?'Sign up':'Loading..' }}
                         </button>
                     </div>
                 </div>
@@ -95,15 +96,32 @@
             </form>
 
             <div class="wrap-login100 wrap-dashboard100" *ngIf="showDashboard">
-                <span class="login100-form-title p-b-49">Dashboard</span>
-                <h3>Welcome user </h3>
-                <div class="container-login100-form-btn" style="margin-top: 52%;" (click)="logout()">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button type="submit" class="login100-form-btn">
-                            Log out
-                        </button>
+                <div class="login100-form" *ngIf="!loadingData">
+                    <span class="login100-form-title p-b-49" style="margin-bottom: 20px;">Dashboard</span>
+
+                    <div class="wrap-input100 validate-input m-b-23" style="padding: 5px;">
+                        <span class="label-input100">Name: </span> {{userDetails.name}}
                     </div>
+
+                    <div class="wrap-input100 validate-input m-b-23" style="padding: 5px;">
+                        <span class="label-input100">Email: </span> {{userDetails.email}}
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-23" style="padding: 5px;">
+                        <span class="label-input100">Mobile: </span> {{userDetails.mobile}}
+                    </div>
+
+                    <div class="container-login100-form-btn" style="margin-top: 52%;" (click)="logout()">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button type="submit" class="login100-form-btn">
+                                Log out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="login100-form" *ngIf="loadingData">
+                    <h4>Loading your data.<br> Please wait.</h4>
                 </div>
             </div>
         </div>
